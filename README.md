@@ -10,9 +10,9 @@ The right panel is a placeholder so please feel free to modify it as you see fit
 
 
 ## Submission
-The preferred way is to submit a PR to this repo and optionally you can also email us your CV with your github username on it. 
+The preferred way is to submit a PR to this repo and email us your CV with your github username on it. 
 
-If you are uncomfortable with a public PR, you can also submit a zip file of your changes.
+If you are uncomfortable with a public PR, you can also email us a zip file of your changes + CV.
 
 **team(at)tradevision(dot)com**
 
