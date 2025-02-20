@@ -1,5 +1,5 @@
 ## Goal
-Thanks for your interest in TradeVision! The goal of this assignment is to improve the fundamental analysis provided by this sample app. The challenge with fundamental analysis using the least amount of space (chart / data) to present information that would be useful in making a trading / investing decision. This is a realistic representation of the work for the full stack developer position. 
+**The goal of this assignment is to improve the fundamental analysis provided by this sample app**. The challenge with fundamental analysis using the least amount of space (chart / data) to present information that would be useful in making a trading / investing decision. This is a realistic representation of projects for the **Full Stack developer / Product Owner** position. 
 
 ![TradeVision Screenshot](./image.png)
 
@@ -10,7 +10,7 @@ The preferred way is to submit a PR to this repo and optionally you can also ema
 
 If you are uncomfortable with a public PR, you can also submit a zip file of your changes.
 
-team(at)tradevision(dot)com
+**team(at)tradevision(dot)com**
 
 ## Setup
 - Clone the repo by running: `git clone https://github.com/tradevisionio/mini-project.git.git`
