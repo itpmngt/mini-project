@@ -17,7 +17,7 @@
 /.next/
 /out/
 
-/public/data
+/public/data/processed
 
 # production
 /build
