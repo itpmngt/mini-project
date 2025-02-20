@@ -5,6 +5,10 @@
 
 The right panel is a placeholder so please feel free to modify it as you see fit. You are not expected to use all (or most) of the data provided. **There should be no more than 2 charts and 4 numbers / data points on the right panel**. Simplicity is key here. In fact the less you can include and still be useful the better.
 
+**P.S.: The expectation is that this should take a few hours (no more than 3 to 4 hours)**
+
+
+
 ## Submission
 The preferred way is to submit a PR to this repo and optionally you can also email us your CV with your github username on it. 
 
