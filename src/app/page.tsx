@@ -4,6 +4,7 @@ import { createChart, IChartApi, ISeriesApi, Time } from 'lightweight-charts';
 import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { FinancialData } from './api/data/route';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface YahooFinanceResponse {
   chart?: {
@@ -80,6 +81,36 @@ const Button = styled.button`
   &:hover {
     background: #2bbbad;
   }
+`;
+
+const MetricsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+`;
+
+const MetricCard = styled.div`
+  background: #1e1e1e;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #333;
+`;
+
+const MetricTitle = styled.h3`
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #888;
+`;
+
+const MetricValue = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  color: #26a69a;
+`;
+
+const ChartTitle = styled.h3`
+  margin: 20px 0 10px 0;
 `;
 
 function Home() {
@@ -196,14 +227,68 @@ function Home() {
 
       {/* Right Panel: Local JSON Data */}
       <Panel $rightPanel>
-        <Title>Local JSON Data</Title>
-        {apiData ? (
-          <DataDisplay>
-            {JSON.stringify(apiData, null, 2)}
-          </DataDisplay>
-        ) : (
-          <LoadingText>Loading local data...</LoadingText>
-        )}
+        <Title>{apiData?.company || 'Company'} ({apiData?.symbol || ''})</Title>
+        
+        <MetricsGrid>
+          <MetricCard>
+            <MetricTitle>TTM Revenue</MetricTitle>
+            <MetricValue>
+              ${apiData?.ttm_revenue ? (Number(apiData.ttm_revenue) / 1000).toFixed(1) : '--'}B
+            </MetricValue>
+          </MetricCard>
+          <MetricCard>
+            <MetricTitle>TTM EPS</MetricTitle>
+            <MetricValue>${apiData?.ttm_eps || '--'}</MetricValue>
+          </MetricCard>
+          <MetricCard>
+            <MetricTitle>Gross Margin</MetricTitle>
+            <MetricValue>{apiData?.gross_margin || '--'}%</MetricValue>
+          </MetricCard>
+          <MetricCard>
+            <MetricTitle>ROE</MetricTitle>
+            <MetricValue>{apiData?.roe || '--'}%</MetricValue>
+          </MetricCard>
+        </MetricsGrid>
+
+        <ChartTitle>Revenue Growth</ChartTitle>
+        <ResponsiveContainer width="100%" height={200}>
+          <LineChart
+            data={apiData?.years?.map((year, i) => ({
+              year,
+              revenue: apiData?.annual_revenue?.[i] ? Number(apiData.annual_revenue[i]) / 1000 : 0
+            })) || []}
+            margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+            <XAxis dataKey="year" stroke="#888" />
+            <YAxis stroke="#888" />
+            <Tooltip 
+              contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
+              labelStyle={{ color: '#fff' }}
+            />
+            <Line type="monotone" dataKey="revenue" stroke="#26a69a" />
+          </LineChart>
+        </ResponsiveContainer>
+
+        <ChartTitle>EPS Trend</ChartTitle>
+        <ResponsiveContainer width="100%" height={200}>
+          <LineChart
+            data={apiData?.years?.map((year, i) => ({
+              year,
+              eps: apiData?.annual_eps?.[i] ? Number(apiData.annual_eps[i]) : 0
+            })) || []}
+            margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+            <XAxis dataKey="year" stroke="#888" />
+            <YAxis stroke="#888" />
+            <Tooltip 
+              contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
+              labelStyle={{ color: '#fff' }}
+            />
+            <Line type="monotone" dataKey="eps" stroke="#26a69a" />
+          </LineChart>
+        </ResponsiveContainer>
       </Panel>
     </Container>
   );
