@@ -3,6 +3,7 @@ import React, {createContext, useState, useContext} from "react";
 const TabsContext = createContext({});
 
 export const TabsProvider = ({children, defaultIndex = 0}) => {
+
     const [activeTab, setActiveTab] = useState(defaultIndex);
 
     return (
@@ -13,9 +14,15 @@ export const TabsProvider = ({children, defaultIndex = 0}) => {
 }
 
 export const useTabs = () => {
+
     const context = useContext(TabsContext);
+
     if (!context) {
+
         throw new Error('useTabs must be used within a TabsProvider');
+
     }
+
     return context;
+
 }

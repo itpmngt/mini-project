@@ -10,8 +10,8 @@ export const Tab = styled.button`
     margin: 0 5px;
     cursor: pointer;
     border: 1px solid #f2f2f2;
-    background: ${props => props.active ? "#333" : "white"};
-    color: ${props => props.active ? "white" : "#333"};
+    background: ${props => props.active ? "white" : "#333" };
+    color: ${props => props.active ? "#333" : "white" };
     border-radius: 4px 4px 0 0;
     position: relative;
     top: 1px;
