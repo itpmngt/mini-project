@@ -4,9 +4,8 @@ import { createChart, IChartApi, ISeriesApi, Time } from 'lightweight-charts';
 import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { FinancialData } from './api/data/route';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Tabs, Tab, TabList, TabPanel } from './components/Tabs/Tabs'
-// import { Chart } from './components/Chart/Chart'
+import { MetricsLineChart } from './components/MetricsCharts/MetricsLineChart'
 
 interface YahooFinanceResponse {
   chart?: {
@@ -259,200 +258,76 @@ function Home() {
           </MetricCard>
         </MetricsGrid>
 
-        <SectionTitle>Annual</SectionTitle>
-
         <Tabs defaultIndex={0} >
 
           <TabList>
-            <Tab index={0}><ChartTitle>Revenue Growth</ChartTitle></Tab>
-            <Tab index={1}><ChartTitle>EPS Trend</ChartTitle></Tab>
-            <Tab index={2}><ChartTitle>Dividends</ChartTitle></Tab>
-            <Tab index={3}><ChartTitle>Earnings</ChartTitle></Tab>
+            <Tab index={0}><ChartTitle>Annual</ChartTitle></Tab>
+            <Tab index={1}><ChartTitle>Quarters</ChartTitle></Tab>
           </TabList>
 
           <TabPanel index={0}>
-            {/* <Chart data={apiData} x="years" y="annual_revenue" /> */}
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart
-                data={apiData?.years?.map((year, i) => ({
-                  year,
-                  revenue: apiData?.annual_revenue?.[i] ? Number(apiData.annual_revenue[i]) / 1000 : 0
-                })) || []}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="year" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip 
-                  contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Line type="monotone" dataKey="revenue" stroke="#26a69a" />
-              </LineChart>
-            </ResponsiveContainer>
+
+            <Tabs defaultIndex={0} >
+
+              <TabList>
+                <Tab index={0}><ChartTitle>Revenue Growth</ChartTitle></Tab>
+                <Tab index={1}><ChartTitle>EPS Trend</ChartTitle></Tab>
+                <Tab index={2}><ChartTitle>Dividends</ChartTitle></Tab>
+                <Tab index={3}><ChartTitle>Earnings</ChartTitle></Tab>
+              </TabList>
+
+              <TabPanel index={0}>
+                <MetricsLineChart data={apiData} x="years" y="annual_revenue" />
+              </TabPanel>
+              
+              <TabPanel index={1}>
+                <MetricsLineChart data={apiData} x="years" y="annual_eps" />
+              </TabPanel>
+
+              <TabPanel index={2}>
+                <MetricsLineChart data={apiData} x="years" y="annual_dividend_per_share" />
+              </TabPanel>
+
+              <TabPanel index={3}>
+                <MetricsLineChart data={apiData} x="years" y="annual_ebitda" />
+              </TabPanel>
+
+            </Tabs>
+
           </TabPanel>
-          
+
           <TabPanel index={1}>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart
-                data={apiData?.years?.map((year, i) => ({
-                  year,
-                  eps: apiData?.annual_eps?.[i] ? Number(apiData.annual_eps[i]) : 0
-                })) || []}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="year" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip 
-                  contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Line type="monotone" dataKey="eps" stroke="#26a69a" />
-              </LineChart>
-            </ResponsiveContainer>
-          </TabPanel>
 
-          <TabPanel index={2}>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart
-                data={apiData?.years?.map((year, i) => ({
-                  year,
-                  dividend_per_share: apiData?.annual_dividend_per_share?.[i] ? Number(apiData.annual_dividend_per_share[i]) / 1000 : 0
-                })) || []}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="year" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip 
-                  contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Line type="monotone" dataKey="dividend_per_share" stroke="#26a69a" />
-              </LineChart>
-            </ResponsiveContainer>
-          </TabPanel>
+          <Tabs defaultIndex={0} >
 
-          <TabPanel index={3}>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart
-                data={apiData?.years?.map((year, i) => ({
-                  year,
-                  ebitda: apiData?.annual_ebitda?.[i] ? Number(apiData.annual_ebitda[i]) / 1000 : 0
-                })) || []}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="year" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip 
-                  contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Line type="monotone" dataKey="ebitda" stroke="#26a69a" />
-              </LineChart>
-            </ResponsiveContainer>
-          </TabPanel>
+            <TabList>
+              <Tab index={0}><ChartTitle>Revenue Growth</ChartTitle></Tab>
+              <Tab index={1}><ChartTitle>EPS Trend</ChartTitle></Tab>
+              <Tab index={2}><ChartTitle>Dividends</ChartTitle></Tab>
+              <Tab index={3}><ChartTitle>Income</ChartTitle></Tab>
+            </TabList>
 
-        </Tabs>
+            <TabPanel index={0}>
+              <MetricsLineChart data={apiData} x="quarters" y="q_revenue" />
+            </TabPanel>
+            
+            <TabPanel index={1}>
+              <MetricsLineChart data={apiData} x="quarters" y="q_eps" />
+            </TabPanel>
 
-        <SectionTitle>Quarters</SectionTitle>
+            <TabPanel index={2}>
+              <MetricsLineChart data={apiData} x="quarters" y="q_dividends" />
+            </TabPanel>
 
-        <Tabs defaultIndex={0} >
+            <TabPanel index={3}>
+              <MetricsLineChart data={apiData} x="quarters" y="q_income" />
+            </TabPanel>
 
-          <TabList>
-            <Tab index={0}><ChartTitle>Revenue Growth</ChartTitle></Tab>
-            <Tab index={1}><ChartTitle>EPS Trend</ChartTitle></Tab>
-            <Tab index={2}><ChartTitle>Dividends</ChartTitle></Tab>
-            <Tab index={3}><ChartTitle>Income</ChartTitle></Tab>
-          </TabList>
+          </Tabs>
 
-          <TabPanel index={0}>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart
-                data={apiData?.quarters?.map((quarter, i) => ({
-                  quarter,
-                  q_revenue: apiData?.q_revenue?.[i] ? Number(apiData.q_revenue[i]) / 1000 : 0
-                })) || []}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="quarter" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip 
-                  contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Line type="monotone" dataKey="q_revenue" stroke="#26a69a" />
-              </LineChart>
-            </ResponsiveContainer>
-          </TabPanel>
-          
-          <TabPanel index={1}>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart
-                data={apiData?.quarters?.map((quarter, i) => ({
-                  quarter,
-                  q_eps: apiData?.q_eps?.[i] ? Number(apiData.q_eps[i]) : 0
-                })) || []}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="quarter" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip 
-                  contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Line type="monotone" dataKey="q_eps" stroke="#26a69a" />
-              </LineChart>
-            </ResponsiveContainer>
-          </TabPanel>
+        </TabPanel>
 
-          <TabPanel index={2}>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart
-                data={apiData?.quarters?.map((quarter, i) => ({
-                  quarter,
-                  q_dividends: apiData?.q_dividends?.[i] ? Number(apiData.q_dividends[i]) / 1000 : 0
-                })) || []}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="quarter" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip 
-                  contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Line type="monotone" dataKey="q_dividends" stroke="#26a69a" />
-              </LineChart>
-            </ResponsiveContainer>
-          </TabPanel>
-
-          <TabPanel index={3}>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart
-                data={apiData?.quarters?.map((quarter, i) => ({
-                  quarter,
-                  q_income: apiData?.q_income?.[i] ? Number(apiData.q_income[i]) / 1000 : 0
-                })) || []}
-                margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis dataKey="quarter" stroke="#888" />
-                <YAxis stroke="#888" />
-                <Tooltip 
-                  contentStyle={{ background: '#1e1e1e', border: '1px solid #333' }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Line type="monotone" dataKey="q_income" stroke="#26a69a" />
-              </LineChart>
-            </ResponsiveContainer>
-          </TabPanel>
-
-        </Tabs>
+      </Tabs>
 
       </Panel>
     </Container>
