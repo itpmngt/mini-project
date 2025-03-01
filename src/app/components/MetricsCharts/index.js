@@ -1,6 +1,6 @@
 import MetricsCharts from './MetricsCharts';
 
-import MetricsCards from './Metrics_Cards';
+import MetricsCards from './MetricsCards';
 
 export {
     MetricsCharts,
