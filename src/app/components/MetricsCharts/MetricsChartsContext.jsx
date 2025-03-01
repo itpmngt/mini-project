@@ -1,28 +1,28 @@
-import React, {createContext, useState, useContext} from "react";
+import React, {createContext, useState, useContext} from "react"
+import styled from "styled-components";
 
-const MetricChartsContext = createContext({});
+const MetricsChartsContext = createContext({})
 
-export const MetricChartsProvider = ({children, defaultIndex = 0}) => {
+export const MetricsChartsProvider = ( {children} ) => {
 
-    const [activeMetricChart, setActiveMetricChart] = useState(defaultIndex);
+    const [activeMetricsChart, setActiveMetricsChart] = useState('years')
 
     return (
-        <MetricChartsContext.Provider value={{activeMetricChart, setActiveMetricChart}}>
+
+        <MetricsChartsContext.Provider value={{activeMetricsChart, setActiveMetricsChart}}>
             {children}
-        </MetricChartsContext.Provider>
+        </MetricsChartsContext.Provider>
+
     );
 }
 
-export const useMetricCharts = () => {
+export const useMetricsCharts = () => {
 
-    const context = useContext(MetricChartsContext);
+    const context = useContext(MetricsChartsContext)
 
-    if (!context) {
+    if (!context)
+        throw new Error('useMetricsCharts must be used within a MetricsChartsProvider');
 
-        throw new Error('useMetricCharts must be used within a MetricChartsProvider');
-
-    }
-
-    return context;
+    return context
 
 }

@@ -1,10 +1,10 @@
-import React, {createContext, useState, useContext} from "react";
+import React, {createContext, useState, useContext} from "react"
 
-const TabsContext = createContext({});
+const TabsContext = createContext({})
 
 export const TabsProvider = ({children, defaultIndex = 0}) => {
 
-    const [activeTab, setActiveTab] = useState(defaultIndex);
+    const [activeTab, setActiveTab] = useState(defaultIndex)
 
     return (
         <TabsContext.Provider value={{activeTab, setActiveTab}}>
@@ -15,14 +15,11 @@ export const TabsProvider = ({children, defaultIndex = 0}) => {
 
 export const useTabs = () => {
 
-    const context = useContext(TabsContext);
+    const context = useContext(TabsContext)
 
-    if (!context) {
-
+    if (!context)
         throw new Error('useTabs must be used within a TabsProvider');
 
-    }
-
-    return context;
+    return context
 
 }

@@ -1,9 +1,6 @@
-import MetricsCharts from './MetricsCharts';
-
-import MetricsCards from './MetricsCards';
+import MetricsChartsComponent from './MetricsChartsComponent';
 
 export {
-    MetricsCharts,
-    MetricsCards,
+    MetricsChartsComponent,
 }
 

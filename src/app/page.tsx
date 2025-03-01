@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { FinancialData } from './api/data/route';
 
-import { MetricsCards, MetricsCharts } from './components/MetricsCharts'
+import { MetricsChartsComponent } from './components/MetricsCharts'
 
 interface YahooFinanceResponse {
   chart?: {
@@ -201,11 +201,7 @@ function Home() {
       {/* Right Panel: Local JSON Data */}
       <Panel $rightPanel>
 
-        <Title>{apiData?.company || 'Company'} ({apiData?.symbol || ''})</Title>
-        
-        <MetricsCards apiData={ apiData } />
-
-        <MetricsCharts apiData={ apiData } />
+        <MetricsChartsComponent apiData={ apiData } />
 
       </Panel>
 
