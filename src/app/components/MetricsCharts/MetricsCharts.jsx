@@ -13,7 +13,9 @@ const MetricsCharts = ( props ) => {
 
     const { apiData } = props;
 
-    return (
+    if ( apiData && apiData[x]) {
+
+        return (
 
         <Tabs defaultIndex={0} >
 
@@ -85,7 +87,8 @@ const MetricsCharts = ( props ) => {
             </TabPanel>
 
         </Tabs>
-    );
+
+    ) }
 
 }
 
