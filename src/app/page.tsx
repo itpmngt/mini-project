@@ -4,8 +4,8 @@ import { createChart, IChartApi, ISeriesApi, Time } from 'lightweight-charts';
 import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { FinancialData } from './api/data/route';
-import { Tabs, Tab, TabList, TabPanel } from './components/Tabs/Tabs'
-import { MetricsLineChart } from './components/MetricsCharts/MetricsLineChart'
+
+import { MetricsCards, MetricsCharts } from './components/MetricsCharts'
 
 interface YahooFinanceResponse {
   chart?: {
@@ -84,42 +84,7 @@ const Button = styled.button`
   }
 `;
 
-const MetricsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-bottom: 20px;
-`;
 
-const MetricCard = styled.div`
-  background: #1e1e1e;
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid #333;
-`;
-
-const MetricTitle = styled.h3`
-  margin: 0 0 10px 0;
-  font-size: 14px;
-  color: #888;
-`;
-
-const MetricValue = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  color: #26a69a;
-`;
-
-const SectionTitle = styled.h2`
-  color: #ccc;
-  text-decoration-line: underline;
-  text-underline-offset: 2px;
-  margin-bottom: 1rem;
-`;
-
-const ChartTitle = styled.h3`
-  margin: 4px 0 2px 0;
-`;
 
 function Home() {
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
@@ -235,101 +200,15 @@ function Home() {
 
       {/* Right Panel: Local JSON Data */}
       <Panel $rightPanel>
+
         <Title>{apiData?.company || 'Company'} ({apiData?.symbol || ''})</Title>
         
-        <MetricsGrid>
-          <MetricCard>
-            <MetricTitle>TTM Revenue</MetricTitle>
-            <MetricValue>
-              ${apiData?.ttm_revenue ? (Number(apiData.ttm_revenue) / 1000).toFixed(1) : '--'}B
-            </MetricValue>
-          </MetricCard>
-          <MetricCard>
-            <MetricTitle>TTM EPS</MetricTitle>
-            <MetricValue>${apiData?.ttm_eps || '--'}</MetricValue>
-          </MetricCard>
-          <MetricCard>
-            <MetricTitle>Gross Margin</MetricTitle>
-            <MetricValue>{apiData?.gross_margin || '--'}%</MetricValue>
-          </MetricCard>
-          <MetricCard>
-            <MetricTitle>ROE</MetricTitle>
-            <MetricValue>{apiData?.roe || '--'}%</MetricValue>
-          </MetricCard>
-        </MetricsGrid>
+        <MetricsCards apiData={ apiData } />
 
-        <Tabs defaultIndex={0} >
-
-          <TabList>
-            <Tab index={0}><ChartTitle>Annual</ChartTitle></Tab>
-            <Tab index={1}><ChartTitle>Quarters</ChartTitle></Tab>
-          </TabList>
-
-          <TabPanel index={0}>
-
-            <Tabs defaultIndex={0} >
-
-              <TabList>
-                <Tab index={0}><ChartTitle>Revenue Growth</ChartTitle></Tab>
-                <Tab index={1}><ChartTitle>EPS Trend</ChartTitle></Tab>
-                <Tab index={2}><ChartTitle>Dividends</ChartTitle></Tab>
-                <Tab index={3}><ChartTitle>Earnings</ChartTitle></Tab>
-              </TabList>
-
-              <TabPanel index={0}>
-                <MetricsLineChart data={apiData} x="years" y="annual_revenue" />
-              </TabPanel>
-              
-              <TabPanel index={1}>
-                <MetricsLineChart data={apiData} x="years" y="annual_eps" />
-              </TabPanel>
-
-              <TabPanel index={2}>
-                <MetricsLineChart data={apiData} x="years" y="annual_dividend_per_share" />
-              </TabPanel>
-
-              <TabPanel index={3}>
-                <MetricsLineChart data={apiData} x="years" y="annual_ebitda" />
-              </TabPanel>
-
-            </Tabs>
-
-          </TabPanel>
-
-          <TabPanel index={1}>
-
-          <Tabs defaultIndex={0} >
-
-            <TabList>
-              <Tab index={0}><ChartTitle>Revenue Growth</ChartTitle></Tab>
-              <Tab index={1}><ChartTitle>EPS Trend</ChartTitle></Tab>
-              <Tab index={2}><ChartTitle>Dividends</ChartTitle></Tab>
-              <Tab index={3}><ChartTitle>Income</ChartTitle></Tab>
-            </TabList>
-
-            <TabPanel index={0}>
-              <MetricsLineChart data={apiData} x="quarters" y="q_revenue" />
-            </TabPanel>
-            
-            <TabPanel index={1}>
-              <MetricsLineChart data={apiData} x="quarters" y="q_eps" />
-            </TabPanel>
-
-            <TabPanel index={2}>
-              <MetricsLineChart data={apiData} x="quarters" y="q_dividends" />
-            </TabPanel>
-
-            <TabPanel index={3}>
-              <MetricsLineChart data={apiData} x="quarters" y="q_income" />
-            </TabPanel>
-
-          </Tabs>
-
-        </TabPanel>
-
-      </Tabs>
+        <MetricsCharts apiData={ apiData } />
 
       </Panel>
+
     </Container>
   );
 }
